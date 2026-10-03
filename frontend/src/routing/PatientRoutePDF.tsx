@@ -2,7 +2,6 @@ import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
 import type { RoutingCase } from '../data/routingMocks';
 
-// Регистрируем Roboto с поддержкой кириллицы (все 4 варианта обязательны!)
 Font.register({
   family: 'Roboto',
   fonts: [

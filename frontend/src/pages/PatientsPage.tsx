@@ -52,7 +52,6 @@ export default function PatientsPage() {
   return (
     <Layout>
       <div style={{ padding: "2.5rem" }}>
-        {/* Заголовок и поиск */}
         <div style={{ marginBottom: "2rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
           <div>
             <h1 className="page-title" style={{ color: "var(--text-primary)", fontSize: "2rem", fontWeight: 700, margin: 0 }}>
@@ -84,7 +83,6 @@ export default function PatientsPage() {
           </div>
         </div>
 
-        {/* Таблица пациентов */}
         <div className="glass-card" style={{ overflow: "hidden", padding: 0 }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
@@ -147,7 +145,6 @@ export default function PatientsPage() {
                     </Td>
                     <Td style={{ textAlign: "right" }}>
                       <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }} onClick={(e) => e.stopPropagation()}>
-                        {/* Кнопка быстрого перехода в AI-маршрутизацию */}
                         <button
                           onClick={() => navigate(`/routing?patientId=${patient.id}`)}
                           title="Сформировать AI-маршрут"

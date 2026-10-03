@@ -1,7 +1,5 @@
-// @ts-ignore
 import html2pdf from 'html2pdf.js';
 
-// Вспомогательная функция для создания секции
 const createSection = (title: string, content: string, color: string = '#1e40af') => {
   if (!content) return '';
   return `
@@ -10,7 +8,6 @@ const createSection = (title: string, content: string, color: string = '#1e40af'
   `;
 };
 
-// Вспомогательная функция для создания строки с данными
 const createDataRow = (label: string, value: string) => {
   if (!value) return '';
   return `<p style="margin: 5px 0; font-size: 14px;"><strong>${label}:</strong> ${value}</p>`;
@@ -19,7 +16,6 @@ const createDataRow = (label: string, value: string) => {
 export const generateProtocolPDF = (protocol: any) => {
   const specialization = protocol.specialization || 'therapist';
   
-  // Определяем заголовок в зависимости от специализации
   const getProfileTitle = () => {
     switch (specialization) {
       case 'cardiologist': return 'кардиологии';
@@ -44,7 +40,6 @@ export const generateProtocolPDF = (protocol: any) => {
     }
   };
 
-  // Формируем специфические поля для каждой специализации
   const getSpecializationContent = () => {
     switch (specialization) {
       case 'cardiologist':
@@ -67,7 +62,7 @@ export const generateProtocolPDF = (protocol: any) => {
           ${createSection('Координация', protocol.coordination)}
         `;
       
-      default: // therapist
+      default: 
         return `
           ${createSection('Анамнез жизни', protocol.anamnesisVita)}
           ${createSection('Анамнез заболевания', protocol.anamnesisMorbi)}

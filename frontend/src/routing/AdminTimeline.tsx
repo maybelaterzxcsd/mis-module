@@ -3,7 +3,7 @@ import React from 'react';
 const steps = [
   { label: 'Маршрут сформирован', done: true },
   { label: 'Ссылка отправлена', done: true },
-  { label: 'Пациент ознакомился', done: false }, // Можно менять для демо
+  { label: 'Пациент ознакомился', done: false }, 
   { label: 'Запись подтверждена', done: false }
 ];
 
@@ -24,7 +24,6 @@ export const AdminTimeline: React.FC = () => {
         Статус пациента
       </h3>
       <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
-        {/* Линия прогресса */}
         <div style={{
           position: 'absolute',
           top: '12px',

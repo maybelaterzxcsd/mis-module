@@ -60,7 +60,6 @@ function LoginForm() {
         position: 'relative',
         overflow: 'hidden'
       }}>
-        {/* Декоративные круги на фоне */}
         <div className="login-circle" style={{
           position: 'absolute',
           top: '-100px',
@@ -101,7 +100,6 @@ function LoginForm() {
             animation: 'fadeIn 0.5s ease-out'
           }}
         >
-          {/* Логотип */}
           <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
             <div style={{
               width: '80px',
@@ -136,7 +134,6 @@ function LoginForm() {
             </p>
           </div>
 
-          {/* Поле логина */}
           <div style={{ marginBottom: '1.5rem' }}>
             <label style={{
               display: 'block',
@@ -183,7 +180,6 @@ function LoginForm() {
             </div>
           </div>
 
-          {/* Поле пароля */}
           <div style={{ marginBottom: '2rem' }}>
             <label style={{
               display: 'block',
@@ -253,7 +249,6 @@ function LoginForm() {
             </div>
           </div>
 
-          {/* Кнопка входа */}
           <button
             type="submit"
             disabled={!login || !password || isLoading}
@@ -304,7 +299,6 @@ function LoginForm() {
             )}
           </button>
 
-          {/* Демо-подсказка */}
           <div 
             className="login-demo-box"
             style={{

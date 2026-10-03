@@ -29,7 +29,6 @@ export const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="page-background" style={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Сайдбар */}
       <aside className="sidebar">
         <div className="profile-header">
           <h1 className="logo-title" style={{ color: '#E91E63', fontWeight: 800 }}>
@@ -37,7 +36,6 @@ export const Layout = ({ children }: LayoutProps) => {
           </h1>
         </div>
 
-        {/* Пункты меню */}
         <nav className="sidebar-nav">
           {menuItems.map((item) => {
             const Icon = item.icon;
@@ -55,7 +53,6 @@ export const Layout = ({ children }: LayoutProps) => {
         </nav>
       </aside>
 
-      {/* Основной контент */}
       <main className="main-content">
         {children}
       </main>

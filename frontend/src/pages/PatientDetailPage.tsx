@@ -82,7 +82,6 @@ function PatientDetailPage() {
       : "rgba(255, 193, 7, 0.15)";
   };
 
-  // Киллер-фича: кнопка формирования AI-маршрута
   const handleAIRouting = () => {
     toast.info("AI-маршрутизация", `Формируем маршрут для пациента ${patient.name}`);
     navigate(`/routing?patientId=${patient.id}`);
@@ -91,7 +90,6 @@ function PatientDetailPage() {
   return (
     <Layout>
       <div style={{ padding: "2.5rem" }}>
-        {/* Заголовок и кнопки действий */}
         <div style={{ marginBottom: "2rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
             <div>
@@ -103,7 +101,6 @@ function PatientDetailPage() {
               </p>
             </div>
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              {/* КИЛЛЕР-КНОПКА: AI-маршрутизация */}
               <button
                 onClick={handleAIRouting}
                 style={{
@@ -158,7 +155,6 @@ function PatientDetailPage() {
           </div>
         </div>
 
-        {/* Информация о пациенте */}
         <div className="glass-card" style={{ padding: "2rem", marginBottom: "2rem" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
             <div>
@@ -209,7 +205,6 @@ function PatientDetailPage() {
           </div>
         </div>
 
-        {/* Вкладки */}
         <div className="glass-card" style={{ overflow: "hidden" }}>
           <div style={{ display: "flex", borderBottom: "1px solid rgba(233, 30, 99, 0.1)", padding: "0 1rem" }}>
             {tabs.map((tab) => {

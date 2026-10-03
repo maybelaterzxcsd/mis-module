@@ -23,7 +23,6 @@ export const EmptyState = ({
       textAlign: 'center',
       color: 'var(--text-muted)'
     }}>
-      {/* Иконка в круге */}
       <div style={{
         width: '80px',
         height: '80px',
@@ -42,7 +41,6 @@ export const EmptyState = ({
         />
       </div>
       
-      {/* Заголовок */}
       <h3 style={{
         color: 'var(--text-primary)',
         fontSize: '1.25rem',
@@ -52,7 +50,6 @@ export const EmptyState = ({
         {title}
       </h3>
       
-      {/* Описание */}
       <p style={{
         fontSize: '1rem',
         marginBottom: actionLabel ? '1.5rem' : '0',
@@ -62,7 +59,6 @@ export const EmptyState = ({
         {description}
       </p>
       
-      {/* Кнопка действия (если передана) */}
       {actionLabel && onAction && (
         <button onClick={onAction} className="btn-primary">
           {actionLabel}

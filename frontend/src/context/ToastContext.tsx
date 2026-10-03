@@ -87,7 +87,6 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     <ToastContext.Provider value={{ showToast, success, error, warning, info }}>
       {children}
       
-      {/* Контейнер для toast-уведомлений */}
       <div style={{
         position: 'fixed',
         top: '2rem',

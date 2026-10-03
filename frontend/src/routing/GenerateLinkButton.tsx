@@ -51,26 +51,7 @@ export const GenerateLinkButton: React.FC = () => {
           }}>
             {mockLink}
           </div>
-          
-          {/* Имитация QR-кода для вау-эффекта */}
-          <div style={{
-            width: '150px',
-            height: '150px',
-            margin: '0 auto',
-            background: '#fff',
-            border: '4px solid #E91E63',
-            borderRadius: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '12px',
-            color: '#8A8A8A'
-          }}>
-            [ QR CODE ]
-          </div>
-          <div style={{ fontSize: '12px', color: '#4CAF50', marginTop: '12px', fontWeight: 600 }}>
-            ✅ Ссылка скопирована и отправлена пациенту
-          </div>
+
         </div>
       )}
     </div>

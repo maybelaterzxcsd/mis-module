@@ -11,7 +11,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS для фронтенда
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://localhost:3000", "*"],
@@ -19,8 +18,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# === МОДЕЛИ ЗАПРОСОВ/ОТВЕТОВ ===
 
 class ConclusionRequest(BaseModel):
     text: str
@@ -38,7 +35,22 @@ class RoutingResponse(BaseModel):
     ai_confidence: float
     model_used: str
 
-# === ПРАВИЛА МАРШРУТИЗАЦИИ ===
+class DripRequest(BaseModel):
+    patient_id: str
+    day: int  # 1, 3 или 7
+
+MOCK_PATIENTS = {
+    "1": "Мария Петровна",
+    "2": "Иван Сергеевич",
+    "3": "Анна Владимировна",
+    "4": "Дмитрий Андреевич"
+}
+
+DRIP_MESSAGES = {
+    1: "Здравствуйте, {name}! 👋 Напоминаем, что по вашему заключению рекомендуется консультация врача. Не откладывайте здоровье на потом. Нажмите /start в боте, чтобы записаться.",
+    3: "Уважаемый(ая) {name}, мы видим, что вы еще не записались на прием. Это важно для вашего здоровья. Пожалуйста, свяжитесь с нами или нажмите /start в боте.",
+    7: "❗ {name}, ваше здоровье в зоне риска. Вы не записались на прием уже 7 дней. Пожалуйста, ответьте на это сообщение или позвоните нам: +7 (495) 123-45-67."
+}
 
 ROUTING_RULES = {
     "mammography": {
@@ -69,7 +81,7 @@ def detect_conclusion_type(text: str) -> str:
         if any(kw in text_lower for kw in rules["keywords"]):
             return ctype
     
-    return "mammography"  # по умолчанию
+    return "mammography" 
 
 @app.get("/")
 async def root():
@@ -93,18 +105,13 @@ async def analyze_conclusion(request: ConclusionRequest):
     Анализирует медицинское заключение и формирует маршрут
     """
     try:
-        # 1. Определяем тип заключения по ключевым словам
         conclusion_type = detect_conclusion_type(request.text)
         
-        # 2. Анализируем срочность через RuBERT
         urgency_result = model_instance.predict_urgency(request.text)
         urgency = urgency_result["urgency"]
         confidence = urgency_result["confidence"]
         
-        # 3. Если модель не дообучена - используем эвристики
-        # (можно убрать, когда модель будет обучена)
         if confidence < 0.5:
-            # Эвристики по ключевым словам
             text_lower = request.text.lower()
             if any(word in text_lower for word in ["bi-rads 4", "bi-rads 5", "злокачеств", "карцином"]):
                 urgency = "red"
@@ -113,7 +120,6 @@ async def analyze_conclusion(request: ConclusionRequest):
             else:
                 urgency = "green"
         
-        # 4. Формируем маршрут
         rules = ROUTING_RULES[conclusion_type]
         
         return RoutingResponse(
@@ -139,6 +145,27 @@ async def analyze_batch(texts: List[str]):
         result = model_instance.predict_urgency(text)
         results.append(result)
     return results
+
+@app.post("/api/drip-campaign")
+async def send_drip_message(request: DripRequest):
+    """
+    Генерирует и ставит в очередь сообщение для пациента (Drip-campaign)
+    """
+    name = MOCK_PATIENTS.get(request.patient_id, "Пациент")
+    text = DRIP_MESSAGES.get(request.day, DRIP_MESSAGES[1]).format(name=name)
+    
+    # В реальном проекте здесь был бы вызов Telegram Bot API:
+    # chat_id = get_patient_chat_id(request.patient_id)
+    # await send_telegram_message(chat_id, text)
+    
+    return {
+        "status": "success",
+        "patient_id": request.patient_id,
+        "patient_name": name,
+        "day": request.day,
+        "message_sent": text,
+        "info": f"Сообщение для дня {request.day} сгенерировано и поставлено в очередь отправки для patient_{request.patient_id}"
+    }
 
 if __name__ == "__main__":
     import uvicorn
