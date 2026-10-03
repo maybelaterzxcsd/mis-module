@@ -1,0 +1,31 @@
+# --- Frontend (Node.js / React) ---
+node_modules/
+dist/
+.vite/
+.env
+.env.local
+
+# --- Backend (Python) ---
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# --- AI Model (Огромные файлы, GitHub их не пропустит) ---
+*.safetensors
+*.bin
+*.pt
+*.onnx
+backend/medmind-rubert-v2/
+
+# --- IDE & OS ---
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
