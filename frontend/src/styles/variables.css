@@ -1,0 +1,195 @@
+/* === СВЕТЛАЯ ТЕМА "ТРЕТЬЕ МНЕНИЕ" === */
+:root {
+  /* Фон — белый с легким розовым оттенком */
+  --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #fce4ec 50%, #f8bbd0 100%);
+  
+  /* Сайдбар — полупрозрачный белый с glassmorphism */
+  --sidebar-bg: rgba(255, 255, 255, 0.65);
+  --sidebar-border: rgba(233, 30, 99, 0.15);
+  
+  /* Карточки — glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: 1px solid rgba(233, 30, 99, 0.1);
+  --glass-shadow: 0 4px 20px rgba(233, 30, 99, 0.08);
+  --glass-blur: blur(20px);
+  
+  /* Текст */
+  --text-primary: #1A1A1A;
+  --text-secondary: #4A4A4A;
+  --text-muted: #8A8A8A;
+  --text-white: white;
+  
+  /* Градиенты — РОЗОВЫЕ "Третье мнение" */
+  --primary-gradient: linear-gradient(135deg, #E91E63 0%, #9C27B0 100%);
+  --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  
+  /* Статусы */
+  --status-active: rgba(76, 175, 80, 0.15);
+  --status-pending: rgba(255, 193, 7, 0.15);
+  --status-completed: rgba(107, 114, 128, 0.15);
+  
+  /* Типографика */
+  --font-family: 'Inter', sans-serif;
+  
+  /* Радиусы */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* Форма логина */
+  --login-bg-gradient: linear-gradient(135deg, #fff5f7 0%, #fce4ec 50%, #f8bbd0 100%);
+  --login-card-bg: rgba(255, 255, 255, 0.95);
+  --login-card-border: rgba(233, 30, 99, 0.1);
+  --login-card-shadow: 0 20px 60px rgba(233, 30, 99, 0.15);
+  --login-input-bg: rgba(255, 255, 255, 0.9);
+  --login-input-border: rgba(233, 30, 99, 0.2);
+  --login-circle-opacity: 0.1;
+  --login-demo-bg: rgba(233, 30, 99, 0.05);
+  --login-demo-border: rgba(233, 30, 99, 0.15);
+}
+
+/* === ОБЩИЕ СТИЛИ === */
+body {
+  font-family: var(--font-family);
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+/* Сайдбар */
+.sidebar {
+  background: var(--sidebar-bg);
+  backdrop-filter: var(--glass-blur);
+  border-right: 1px solid var(--sidebar-border);
+  width: 260px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.logo-title {
+  font-size: 24px;
+  margin: 0 0 32px 16px;
+  letter-spacing: -0.02em;
+}
+
+/* Пункты меню */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.menu-item:hover {
+  background: rgba(233, 30, 99, 0.08);
+  color: var(--text-primary);
+}
+
+.menu-item.active {
+  background: rgba(233, 30, 99, 0.12);
+  color: #E91E63;
+  font-weight: 600;
+}
+
+.menu-item svg {
+  flex-shrink: 0;
+}
+
+.sidebar-nav {
+  flex: 1;
+}
+
+.sidebar-bottom {
+  border-top: 1px solid var(--sidebar-border);
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+/* Основной контент */
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 32px 40px;
+  min-height: 100vh;
+}
+
+/* Карточки с glassmorphism */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow);
+  padding: 24px;
+}
+
+/* Кнопки */
+.btn-primary {
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+}
+
+/* Инпуты */
+input, select, textarea {
+  background: var(--login-input-bg);
+  border: 1px solid var(--login-input-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 15px;
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  transition: border-color 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #E91E63;
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(233, 30, 99, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(233, 30, 99, 0.4);
+}

@@ -1,0 +1,51 @@
+export interface RoutingCase {
+  id: string;
+  type: 'mammography' | 'ct_lungs' | 'xray';
+  aiConclusion: string;
+  urgency: 'red' | 'yellow' | 'green';
+  specialist: string;
+  timeframe: string;
+  patientExplanation: string;
+  redFlags: string[];
+  appointmentSlots: string[];
+}
+
+export const mockCases: RoutingCase[] = [
+  {
+    id: 'mammo_1',
+    type: 'mammography',
+    aiConclusion: 'BI-RADS 4, образование 15 мм в правой молочной железе с неровными контурами',
+    urgency: 'red',
+    specialist: 'онколог-маммолог',
+    timeframe: '72 часа',
+    patientExplanation: 'На снимке найдено небольшое образование. Это не диагноз, но требует обязательной дополнительной проверки (биопсии). Это стандартная и быстрая процедура.',
+    redFlags: ['Увеличение образования', 'Выделения из соска', 'Изменение кожи груди'],
+    appointmentSlots: ['14:00 завтра', '10:00 послезавтра', '16:00 через 2 дня']
+  },
+  {
+    id: 'ct_1',
+    type: 'ct_lungs',
+    aiConclusion: 'Солидный узел 8 мм в S6 правого легкого с ровными контурами',
+    urgency: 'yellow',
+    specialist: 'пульмонолог',
+    timeframe: '2 недели',
+    patientExplanation: 'В легком обнаружен маленький узелок (8 мм). В подавляющем большинстве случаев такие находки доброкачественные. Стандарт протокола — наблюдение.',
+    redFlags: ['Кашель с кровью', 'Одышка в покое', 'Боль в груди'],
+    appointmentSlots: ['11:00 через неделю', '15:00 через 10 дней']
+  },
+  {
+    id: 'xray_1',
+    type: 'xray',
+    aiConclusion: 'Инфильтративные изменения в нижней доле правого легкого. Пневмония.',
+    urgency: 'red',
+    specialist: 'терапевт',
+    timeframe: '24 часа',
+    patientExplanation: 'На снимке выявлены признаки пневмонии (воспаления легких). Требуется начало лечения под наблюдением врача как можно скорее.',
+    redFlags: ['Температура выше 38.5', 'Сильная одышка', 'Боль при дыхании'],
+    appointmentSlots: ['09:00 завтра', '12:00 завтра', '14:00 завтра']
+  }
+];
+
+export const getCaseByType = (type: string): RoutingCase => {
+  return mockCases.find(c => c.type === type) || mockCases[0];
+};
