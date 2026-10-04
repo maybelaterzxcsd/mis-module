@@ -42,7 +42,25 @@ const styles = StyleSheet.create({
   flagText: { fontSize: 10, color: '#1A1A1A', marginLeft: 8 },
   disclaimer: { marginTop: 30, padding: 10, backgroundColor: '#F5F5F5', borderRadius: 6, border: '1px solid #E0E0E0' },
   disclaimerText: { fontSize: 8, color: '#8A8A8A', lineHeight: 1.4 },
-  footer: { position: 'absolute', bottom: 30, left: 30, right: 30, flexDirection: 'row', justifyContent: 'space-between', fontSize: 8, color: '#8A8A8A', borderTop: '1px solid #E0E0E0', paddingTop: 8 }
+  footer: { position: 'absolute', bottom: 30, left: 30, right: 30, flexDirection: 'row', justifyContent: 'space-between', fontSize: 8, color: '#8A8A8A', borderTop: '1px solid #E0E0E0', paddingTop: 8 },
+  
+  // === НОВЫЕ СТИЛИ ДЛЯ КОНВЕРСИИ ===
+  reassuranceBox: { backgroundColor: '#E3F2FD', padding: 10, borderRadius: 6, border: '1px solid #90CAF9', marginBottom: 15 },
+  reassuranceText: { fontSize: 10, color: '#1565C0', fontWeight: '500', lineHeight: 1.4 },
+  
+  priceBox: { flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#F1F8E9', padding: 12, borderRadius: 6, border: '1px solid #A5D6A7', marginBottom: 15 },
+  priceItem: { flex: 1 },
+  priceLabel: { fontSize: 9, color: '#2E7D32', textTransform: 'uppercase', marginBottom: 4 },
+  priceValue: { fontSize: 12, fontWeight: 'bold', color: '#1A1A1A' },
+  
+  checklistBox: { backgroundColor: '#F8F9FA', padding: 12, borderRadius: 6, marginBottom: 15 },
+  checklistTitle: { fontSize: 11, fontWeight: 'bold', marginBottom: 6, color: '#1A1A1A' },
+  checklistItem: { fontSize: 10, color: '#4A4A4A', marginBottom: 4 },
+  
+  ctaBox: { backgroundColor: '#E91E63', padding: 16, borderRadius: 6, marginTop: 20, alignItems: 'center', textAlign: 'center' },
+  ctaTitle: { fontSize: 14, fontWeight: 'bold', color: '#FFFFFF', marginBottom: 8 },
+  ctaPhone: { fontSize: 16, fontWeight: 'bold', color: '#FFFFFF', marginBottom: 4 },
+  ctaSub: { fontSize: 10, color: '#FFFFFF', opacity: 0.9 }
 });
 
 export const PatientRoutePDF: React.FC<{ caseData: RoutingCase; patientName?: string }> = ({ caseData, patientName = 'Пациент' }) => {
@@ -77,6 +95,13 @@ export const PatientRoutePDF: React.FC<{ caseData: RoutingCase; patientName?: st
           </View>
         </View>
 
+        {/* 🎯 ТРИГГЕР 1: Успокаивающий фрейминг */}
+        <View style={styles.reassuranceBox}>
+          <Text style={styles.reassuranceText}>
+            ⚠️ Важно: Это предварительное AI-заключение, а не окончательный диагноз. В большинстве случаев подобные находки требуют лишь планового наблюдения, но стандарт протокола рекомендует пройти проверку для вашего спокойствия.
+          </Text>
+        </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Рекомендации</Text>
           <View style={styles.infoGrid}>
@@ -91,6 +116,21 @@ export const PatientRoutePDF: React.FC<{ caseData: RoutingCase; patientName?: st
           </View>
         </View>
 
+        {/*  ТРИГГЕР 2: Прозрачность цены */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Стоимость и оплата</Text>
+          <View style={styles.priceBox}>
+            <View style={styles.priceItem}>
+              <Text style={styles.priceLabel}>По ОМС</Text>
+              <Text style={styles.priceValue}>Бесплатно</Text>
+            </View>
+            <View style={styles.priceItem}>
+              <Text style={styles.priceLabel}>Платный прием</Text>
+              <Text style={styles.priceValue}>3 500 ₽</Text>
+            </View>
+          </View>
+        </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Тревожные симптомы (красные флаги)</Text>
           {caseData.redFlags.map((flag, i) => (
@@ -99,6 +139,24 @@ export const PatientRoutePDF: React.FC<{ caseData: RoutingCase; patientName?: st
               <Text style={styles.flagText}>{flag}</Text>
             </View>
           ))}
+        </View>
+
+        {/* 🎯 ТРИГГЕР 3: Чек-лист подготовки */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Подготовка к визиту</Text>
+          <View style={styles.checklistBox}>
+            <Text style={styles.checklistTitle}>🎒 Что взять с собой:</Text>
+            <Text style={styles.checklistItem}>• Паспорт и полис ОМС</Text>
+            <Text style={styles.checklistItem}>• Диск или пленку с текущим снимком</Text>
+            <Text style={styles.checklistItem}>• Предыдущие заключения (если есть)</Text>
+          </View>
+        </View>
+
+        {/* 🎯 ТРИГГЕР 4: Call-to-Action */}
+        <View style={styles.ctaBox}>
+          <Text style={styles.ctaTitle}> Ваш следующий шаг</Text>
+          <Text style={styles.ctaPhone}>+7 (495) 123-45-67 (доб. 105)</Text>
+          <Text style={styles.ctaSub}>Или нажмите кнопку «Записаться» в личном кабинете</Text>
         </View>
 
         <View style={styles.disclaimer}>

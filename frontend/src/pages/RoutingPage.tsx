@@ -65,7 +65,9 @@ export const RoutingPage: React.FC = () => {
         timeframe: data.timeframe,
         patientExplanation: `На основании AI-анализа заключения, рекомендуется консультация специалиста (${data.specialist}) в срок ${data.timeframe}.`,
         redFlags: data.red_flags,
-        appointmentSlots: ['10:00 завтра', '14:00 послезавтра', '09:00 через 3 дня']
+        appointmentSlots: ['10:00 завтра', '14:00 послезавтра', '09:00 через 3 дня'],
+        nextSteps: data.next_steps || [],
+        questionsForDoctor: data.questions_for_doctor || []
       });
 
     } catch (err) {

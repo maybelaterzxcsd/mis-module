@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { pdf } from '@react-pdf/renderer';
 import { QRCodeSVG } from 'qrcode.react';
+import { FileDown, QrCode, Send, Clock, Calendar, HelpCircle } from 'lucide-react';
 import type { RoutingCase } from '../data/routingMocks';
 import { UrgencyBadge } from './UrgencyBadge';
 import { PatientRoutePDF } from './PatientRoutePDF';
@@ -14,6 +15,21 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
   const [showTelegramLink, setShowTelegramLink] = useState(false);
   const [patientId, setPatientId] = useState('');
   const [copied, setCopied] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(7200); // 2 часа в секундах
+
+  // Таймер обратного отсчета для бронирования
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
 
   const handleDownloadPDF = async () => {
     try {
@@ -36,7 +52,8 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
   };
 
   const handleGenerateTelegramLink = () => {
-    const newId = `patient_${caseData.id}`;
+    const correctId = caseData.id || "4"; 
+    const newId = `patient_${correctId}`;
     setPatientId(newId);
     setShowTelegramLink(true);
     setCopied(false);
@@ -76,6 +93,66 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
         </div>
       </div>
 
+      {/* 🔥 НОВЫЙ БЛОК: Предварительно забронированный слот */}
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <Clock size={16} />
+          Предварительно забронированный слот
+        </div>
+        <div style={{ 
+          padding: '16px', 
+          background: 'linear-gradient(135deg, rgba(233, 30, 99, 0.08) 0%, rgba(156, 39, 176, 0.08) 100%)',
+          borderRadius: '12px', 
+          border: '2px solid rgba(233, 30, 99, 0.2)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <div>
+            <div style={{ fontSize: '16px', fontWeight: 700, color: '#1A1A1A' }}>
+              {caseData.appointmentSlots[0] || '10:00 завтра'}
+            </div>
+            <div style={{ fontSize: '13px', color: '#8A8A8A', marginTop: '4px' }}>
+              {caseData.specialist} • Бронь держится 2 часа
+            </div>
+          </div>
+          <div style={{ 
+            padding: '8px 14px', 
+            background: '#EF4444', 
+            color: 'white', 
+            borderRadius: '8px',
+            fontSize: '13px',
+            fontWeight: 700,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}>
+            <Clock size={14} />
+            {formatTime(timeLeft)}
+          </div>
+        </div>
+        
+        {caseData.appointmentSlots.length > 1 && (
+          <div style={{ marginTop: '12px' }}>
+            <div style={{ color: '#8A8A8A', fontSize: '12px', marginBottom: '6px' }}>Другие доступные слоты:</div>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              {caseData.appointmentSlots.slice(1).map((slot, i) => (
+                <span key={i} style={{ 
+                  padding: '6px 12px', 
+                  borderRadius: '8px', 
+                  background: 'rgba(233, 30, 99, 0.1)', 
+                  color: '#E91E63', 
+                  fontSize: '13px', 
+                  fontWeight: 500 
+                }}>
+                  {slot}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
       <div style={{ marginBottom: '20px' }}>
         <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600 }}>Красные флаги</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -88,17 +165,71 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
         </div>
       </div>
 
-      <div style={{ marginBottom: '24px' }}>
-        <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600 }}>Свободные слоты</div>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {caseData.appointmentSlots.map((slot, i) => (
-            <span key={i} style={{ padding: '8px 16px', borderRadius: '12px', background: 'rgba(233, 30, 99, 0.1)', color: '#E91E63', fontSize: '14px', fontWeight: 500 }}>
-              {slot}
-            </span>
-          ))}
+      {/* 🔥 НОВЫЙ БЛОК: Персональный план наблюдения */}
+      {caseData.nextSteps && caseData.nextSteps.length > 0 && (
+        <div style={{ marginBottom: '24px' }}>
+          <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Calendar size={16} />
+            Персональный план наблюдения (3 месяца)
+          </div>
+          <div style={{ padding: '16px', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%)', borderRadius: '12px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+            {caseData.nextSteps.map((step, i) => (
+              <div key={i} style={{ 
+                padding: '10px 12px', 
+                background: 'rgba(255, 255, 255, 0.7)', 
+                borderRadius: '8px', 
+                marginBottom: i < caseData.nextSteps!.length - 1 ? '8px' : '0',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '10px'
+              }}>
+                <div style={{ 
+                  minWidth: '24px', 
+                  height: '24px', 
+                  borderRadius: '50%', 
+                  background: 'linear-gradient(135deg, #10B981 0%, #3B82F6 100%)',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  flexShrink: 0
+                }}>
+                  {i + 1}
+                </div>
+                <span style={{ color: '#1A1A1A', fontSize: '14px', lineHeight: '1.5' }}>{step}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
+      {/* 🔥 НОВЫЙ БЛОК: Вопросы к врачу от ИИ */}
+      {caseData.questionsForDoctor && caseData.questionsForDoctor.length > 0 && (
+        <div style={{ marginBottom: '24px' }}>
+          <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <HelpCircle size={16} />
+            ИИ составил вопросы к врачу
+          </div>
+          <div style={{ padding: '16px', background: 'rgba(156, 39, 176, 0.05)', borderRadius: '12px', border: '1px solid rgba(156, 39, 176, 0.2)' }}>
+            {caseData.questionsForDoctor.map((q, i) => (
+              <div key={i} style={{ 
+                padding: '10px 12px', 
+                background: 'rgba(255, 255, 255, 0.7)', 
+                borderRadius: '8px', 
+                marginBottom: i < caseData.questionsForDoctor!.length - 1 ? '8px' : '0',
+                fontStyle: 'italic'
+              }}>
+                <span style={{ color: '#9C27B0', fontWeight: 700, marginRight: '8px' }}>{i + 1}.</span>
+                <span style={{ color: '#1A1A1A', fontSize: '14px' }}>«{q}»</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* БЛОК С QR-КОДОМ */}
       {showTelegramLink && (
         <div style={{ 
           marginTop: '24px', 
@@ -122,19 +253,13 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
               marginBottom: '16px',
               boxShadow: '0 4px 12px rgba(233, 30, 99, 0.3)'
             }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ color: 'white' }}>
-                <path d="M7 7h10v10H7V7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M3 3h4v4H3V3z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M17 3h4v4h-4V3z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M3 17h4v4H3v-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M17 17h4v4h-4v-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <QrCode size={24} color="white" />
             </div>
             <h3 style={{ color: '#1A1A1A', fontSize: '18px', fontWeight: 600, marginBottom: '8px' }}>
-              QR-код для пациента
+              Маршрут для пациента
             </h3>
             <p style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '24px' }}>
-              Пациент отсканирует код и получит персональный маршрут в Telegram
+              Отсканируйте код или отправьте ссылку пациенту
             </p>
           </div>
 
@@ -179,10 +304,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
                 </>
               ) : (
                 <>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <Send size={18} />
                   Скопировать ссылку
                 </>
               )}
@@ -193,7 +315,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ color: '#4CAF50' }}>
               <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span style={{ color: '#2E7D32', fontSize: '13px', fontWeight: 500 }}>Готово к отправке пациенту</span>
+            <span style={{ color: '#2E7D32', fontSize: '13px', fontWeight: 500 }}>Готово к отправке</span>
           </div>
 
           <style>{`
@@ -205,6 +327,7 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
         </div>
       )}
 
+      {/* КНОПКИ ДЕЙСТВИЙ */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '24px' }}>
         <button
           onClick={handleGenerateTelegramLink}
@@ -212,7 +335,8 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
           onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 16px rgba(233, 30, 99, 0.4)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(233, 30, 99, 0.3)'; }}
         >
-          📱 Сгенерировать ссылку для пациента (Telegram)
+          <QrCode size={20} />
+          Сгенерировать ссылку для пациента
         </button>
 
         <button
@@ -222,7 +346,12 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
           onMouseEnter={(e) => { if (!loading) { e.currentTarget.style.background = '#E91E63'; e.currentTarget.style.color = '#FFFFFF'; } }}
           onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(233, 30, 99, 0.1)'; e.currentTarget.style.color = '#E91E63'; }}
         >
-          {loading ? ' Генерация PDF...' : '📄 Скачать PDF-маршрут'}
+          {loading ? 'Генерация PDF...' : (
+            <>
+              <FileDown size={20} />
+              Скачать PDF-маршрут
+            </>
+          )}
         </button>
       </div>
     </div>
