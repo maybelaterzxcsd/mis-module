@@ -54,7 +54,7 @@ export default function Dashboard() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
           <StatCard icon={<Users size={24} />} title="Всего пациентов" value="1,248" color="#E91E63" />
-          <StatCard icon={<Calendar size={24} />} title="Приёмов сегодня" value="12" color="#9C27B0" />
+          <StatCard icon={<Calendar size={24} />} title="Приемов сегодня" value="12" color="#9C27B0" />
           <StatCard icon={<FileText size={24} />} title="Черновики протоколов" value="3" color="#F59E0B" />
           <StatCard icon={<Brain size={24} />} title="AI-анализов за неделю" value="47" color="#10B981" />
         </div>
@@ -64,7 +64,7 @@ export default function Dashboard() {
           <div className="glass-card" style={{ padding: "1.5rem" }}>
             <h3 style={{ color: "var(--text-primary)", fontSize: "1.125rem", fontWeight: 700, marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <Calendar size={20} color="#E91E63" />
-              Приёмы на сегодня
+              Приемы на сегодня
             </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               {mockTodayAppointments.map((apt) => (
@@ -97,7 +97,7 @@ export default function Dashboard() {
                     background: apt.status === "completed" ? "rgba(76, 175, 80, 0.15)" : "rgba(255, 193, 7, 0.15)",
                     color: apt.status === "completed" ? "#2E7D32" : "#F57F17"
                   }}>
-                    {apt.status === "completed" ? "Завершён" : "Ожидает"}
+                    {apt.status === "completed" ? "Завершен" : "Ожидает"}
                   </span>
                 </div>
               ))}

@@ -41,8 +41,8 @@ const MOCK_PATIENT = {
     { id: 3, date: "15.07.2026", doctorName: "Козлов Д.М.", type: "Кардиолог", diagnosis: "Контрольный осмотр" },
   ],
   protocols: [
-    { id: 1, date: "12.09.2026", type: "Лечение ИБС", diagnosis: "I25.1", status: "Утверждён" },
-    { id: 2, date: "28.08.2026", type: "Купирование криза", diagnosis: "I10", status: "Завершён" },
+    { id: 1, date: "12.09.2026", type: "Лечение ИБС", diagnosis: "I25.1", status: "Утвержден" },
+    { id: 2, date: "28.08.2026", type: "Купирование криза", diagnosis: "I10", status: "Завершен" },
   ],
 };
 
@@ -69,14 +69,14 @@ function PatientDetailPage() {
   };
 
   const tabs = [
-    { id: "visits", label: "Приёмы", icon: Calendar },
+    { id: "visits", label: "Приемы", icon: Calendar },
     { id: "protocols", label: "Протоколы", icon: ClipboardList },
     { id: "tests", label: "Анализы", icon: TestTube },
     { id: "prescriptions", label: "Назначения", icon: Pill },
   ];
 
   const getStatusColor = (status: string) => {
-    return status === "Утверждён" || status === "Завершён"
+    return status === "Утвержден" || status === "Завершен"
       ? "rgba(76, 175, 80, 0.15)"
       : "rgba(255, 193, 7, 0.15)";
   };
@@ -131,7 +131,7 @@ function PatientDetailPage() {
               </button>
 
               <button
-                onClick={() => toast.info("Новый приём", "Функция в разработке")}
+                onClick={() => toast.info("Новый прием", "Функция в разработке")}
                 className="btn-primary"
                 style={{
                   background: "var(--primary-gradient)",
@@ -148,7 +148,7 @@ function PatientDetailPage() {
                 }}
               >
                 <Plus size={20} />
-                Новый приём
+                Новый прием
               </button>
             </div>
           </div>
@@ -238,7 +238,7 @@ function PatientDetailPage() {
             {activeTab === "visits" && (
               <div>
                 <h3 style={{ color: "var(--text-primary)", fontSize: "1.25rem", fontWeight: 700, marginBottom: "1.5rem" }}>
-                  История приёмов
+                  История приемов
                 </h3>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>
@@ -265,13 +265,13 @@ function PatientDetailPage() {
                             style={{
                               padding: "4px 12px",
                               borderRadius: "100px",
-                              background: getStatusColor("Завершён"),
+                              background: getStatusColor("Завершен"),
                               color: "var(--text-secondary)",
                               fontSize: "0.85rem",
                               fontWeight: 500,
                             }}
                           >
-                            Завершён
+                            Завершен
                           </span>
                         </Td>
                       </tr>

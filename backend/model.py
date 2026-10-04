@@ -1,10 +1,11 @@
+import os
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 from typing import Optional
 
 class MedMindModel:
-    def __init__(self, model_path: str = "./medmind-rubert-v2"):
-        self.model_path = model_path
+    def __init__(self, model_path: str = None):
+        self.model_path = model_path or os.getenv("MODEL_PATH", "maybelaterzxcsd/medmind-rubert-v2")
         self.model = None
         self.tokenizer = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -20,7 +21,7 @@ class MedMindModel:
             )
             self.model.to(self.device)
             self.model.eval()
-            print(f"Модель загружена на {self.device}")
+            print(f"Модель успешно загружена на {self.device}")
     
     def predict_urgency(self, text: str) -> dict:
         """
