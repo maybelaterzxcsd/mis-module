@@ -30,7 +30,6 @@ async function request<T>(
 }
 
 
-// 1. Пациенты
 export const patientsApi = {
   getAll: () => request<any[]>('/patients'),
   getById: (id: string) => request<any>(`/patients/${id}`),
@@ -38,7 +37,6 @@ export const patientsApi = {
   update: (id: string, data: any) => request<any>(`/patients/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
 };
 
-// 2. Протоколы
 export const protocolsApi = {
   getAll: () => request<any[]>('/protocols'),
   getById: (id: string) => request<any>(`/protocols/${id}`),
@@ -47,7 +45,6 @@ export const protocolsApi = {
   delete: (id: string) => request<void>(`/protocols/${id}`, { method: 'DELETE' }),
 };
 
-// 3. Больничные листы
 export const sickLeavesApi = {
   getAll: () => request<any[]>('/sick-leaves'),
   getById: (id: string) => request<any>(`/sick-leaves/${id}`),
@@ -55,7 +52,6 @@ export const sickLeavesApi = {
   update: (id: string, data: any) => request<any>(`/sick-leaves/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
 };
 
-// 4. Прием
 export const visitsApi = {
   getAll: () => request<any[]>('/visits'),
   create: (data: any) => request<any>('/visits', { method: 'POST', body: JSON.stringify(data) }),
@@ -70,7 +66,6 @@ export const visitsApi = {
   }
 };
 
-// 5. Настройки и профиль врача
 export const profileApi = {
   get: () => request<any>('/profile'),
   update: (data: any) => request<any>('/profile', { method: 'PUT', body: JSON.stringify(data) }),

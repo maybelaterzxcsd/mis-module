@@ -16,7 +16,7 @@ class MedMindModel:
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_path)
             self.model = AutoModelForSequenceClassification.from_pretrained(
                 self.model_path,
-                ignore_mismatched_sizes=True  # на случай если архитектура не совпадает
+                ignore_mismatched_sizes=True 
             )
             self.model.to(self.device)
             self.model.eval()
@@ -43,8 +43,6 @@ class MedMindModel:
             probabilities = torch.softmax(logits, dim=1)[0]
             predicted_class = torch.argmax(logits, dim=1).item()
         
-        # Маппинг классов (зависит от того, как обучена модель)
-        # Если модель не дообучена - используем правила
         urgency_map = {0: "green", 1: "yellow", 2: "red"}
         urgency = urgency_map.get(predicted_class, "yellow")
         confidence = probabilities[predicted_class].item()
@@ -62,10 +60,8 @@ class MedMindModel:
         
         with torch.no_grad():
             outputs = self.model(**inputs, output_hidden_states=True)
-            # Берём последний hidden state
             embeddings = outputs.hidden_states[-1].mean(dim=1).squeeze().cpu().numpy().tolist()
         
         return embeddings
 
-# Глобальный инстанс модели
 model_instance = MedMindModel()

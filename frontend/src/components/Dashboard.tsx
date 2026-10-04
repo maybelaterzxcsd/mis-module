@@ -43,7 +43,6 @@ export default function Dashboard() {
   return (
     <Layout>
       <div style={{ padding: "2.5rem" }}>
-        {/* Приветствие */}
         <div style={{ marginBottom: "2rem" }}>
           <h1 className="page-title" style={{ color: "var(--text-primary)", fontSize: "2rem", fontWeight: 700, margin: 0 }}>
             Добрый день, {DOCTOR_NAME}! 

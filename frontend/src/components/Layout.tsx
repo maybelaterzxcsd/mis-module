@@ -42,7 +42,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#FDF2F8' }}>
       
-      {/* Сайдбар */}
       <aside style={{
         width: '260px',
         background: '#FFFFFF',
@@ -55,7 +54,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         boxShadow: '4px 0 24px rgba(233, 30, 99, 0.04)'
       }}>
         
-        {/* Логотип */}
         <div style={{ 
           display: 'flex', 
           alignItems: 'center', 
@@ -95,7 +93,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         </div>
 
-        {/* Основная навигация */}
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
           {mainItems.map((item) => {
             const active = isActive(item.path);
@@ -148,14 +145,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           })}
         </nav>
 
-        {/* Разделитель */}
         <div style={{ 
           height: '1px', 
           background: 'rgba(233, 30, 99, 0.08)', 
           margin: '20px 12px' 
         }} />
 
-        {/* Вторичная навигация */}
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
           {secondaryItems.map((item) => {
             const active = isActive(item.path);
@@ -208,7 +203,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           })}
         </nav>
 
-        {/* Футер сайдбара */}
         <div style={{ marginTop: 'auto', padding: '16px 12px' }}>
           <div style={{
             padding: '12px',
@@ -236,7 +230,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       </aside>
 
-      {/* Основной контент */}
       <main style={{ 
         flex: 1, 
         marginLeft: '260px',

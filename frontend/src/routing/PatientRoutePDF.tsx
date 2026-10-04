@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   disclaimerText: { fontSize: 8, color: '#8A8A8A', lineHeight: 1.4 },
   footer: { position: 'absolute', bottom: 30, left: 30, right: 30, flexDirection: 'row', justifyContent: 'space-between', fontSize: 8, color: '#8A8A8A', borderTop: '1px solid #E0E0E0', paddingTop: 8 },
   
-  // === НОВЫЕ СТИЛИ ДЛЯ КОНВЕРСИИ ===
   reassuranceBox: { backgroundColor: '#E3F2FD', padding: 10, borderRadius: 6, border: '1px solid #90CAF9', marginBottom: 15 },
   reassuranceText: { fontSize: 10, color: '#1565C0', fontWeight: '500', lineHeight: 1.4 },
   
@@ -95,7 +94,6 @@ export const PatientRoutePDF: React.FC<{ caseData: RoutingCase; patientName?: st
           </View>
         </View>
 
-        {/* 🎯 ТРИГГЕР 1: Успокаивающий фрейминг */}
         <View style={styles.reassuranceBox}>
           <Text style={styles.reassuranceText}>
             ⚠️ Важно: Это предварительное AI-заключение, а не окончательный диагноз. В большинстве случаев подобные находки требуют лишь планового наблюдения, но стандарт протокола рекомендует пройти проверку для вашего спокойствия.
@@ -116,7 +114,6 @@ export const PatientRoutePDF: React.FC<{ caseData: RoutingCase; patientName?: st
           </View>
         </View>
 
-        {/*  ТРИГГЕР 2: Прозрачность цены */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Стоимость и оплата</Text>
           <View style={styles.priceBox}>
@@ -141,7 +138,6 @@ export const PatientRoutePDF: React.FC<{ caseData: RoutingCase; patientName?: st
           ))}
         </View>
 
-        {/* 🎯 ТРИГГЕР 3: Чек-лист подготовки */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Подготовка к визиту</Text>
           <View style={styles.checklistBox}>
@@ -152,7 +148,6 @@ export const PatientRoutePDF: React.FC<{ caseData: RoutingCase; patientName?: st
           </View>
         </View>
 
-        {/* 🎯 ТРИГГЕР 4: Call-to-Action */}
         <View style={styles.ctaBox}>
           <Text style={styles.ctaTitle}> Ваш следующий шаг</Text>
           <Text style={styles.ctaPhone}>+7 (495) 123-45-67 (доб. 105)</Text>

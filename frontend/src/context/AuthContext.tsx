@@ -24,13 +24,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (token: string) => {
     localStorage.setItem('medmind_token', token);
     setIsAuthenticated(true);
-    // Навигация делается в компоненте, который вызывает login()
   };
 
   const logout = () => {
     localStorage.removeItem('medmind_token');
     setIsAuthenticated(false);
-    // Навигация делается в компоненте, который вызывает logout()
   };
 
   return (

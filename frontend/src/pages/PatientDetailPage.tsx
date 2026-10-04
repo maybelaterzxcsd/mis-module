@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import { Layout } from "../components/Layout";
 
-// Мок-данные пациента (встроены, чтобы не зависеть от удаленного файла)
 const MOCK_PATIENT = {
   id: 1,
   personalInfo: {
@@ -354,7 +353,6 @@ function PatientDetailPage() {
   );
 }
 
-// Вспомогательные компоненты
 function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>

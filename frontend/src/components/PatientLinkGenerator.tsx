@@ -5,7 +5,6 @@ const PatientLinkGenerator = () => {
   const [patientId, setPatientId] = useState('');
   const [copied, setCopied] = useState(false);
 
-  // Генерация уникальной ссылки (в реальности ID берется из карты пациента на бэкенде)
   const generateLink = () => {
     const newId = `patient_${Math.floor(Math.random() * 100000)}`;
     setPatientId(newId);

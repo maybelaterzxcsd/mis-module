@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { pdf } from '@react-pdf/renderer';
 import { QRCodeSVG } from 'qrcode.react';
-import { FileDown, QrCode, Send, Clock, Calendar, HelpCircle } from 'lucide-react';
+import { FileDown, QrCode, Send, Clock, Calendar, AlertTriangle, FileCheck, ShieldCheck } from 'lucide-react';
 import type { RoutingCase } from '../data/routingMocks';
 import { UrgencyBadge } from './UrgencyBadge';
 import { PatientRoutePDF } from './PatientRoutePDF';
@@ -15,9 +15,8 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
   const [showTelegramLink, setShowTelegramLink] = useState(false);
   const [patientId, setPatientId] = useState('');
   const [copied, setCopied] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(7200); // 2 часа в секундах
+  const [timeLeft, setTimeLeft] = useState(7200); 
 
-  // Таймер обратного отсчета для бронирования
   useEffect(() => {
     if (timeLeft <= 0) return;
     const timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
@@ -93,7 +92,6 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
         </div>
       </div>
 
-      {/* 🔥 НОВЫЙ БЛОК: Предварительно забронированный слот */}
       <div style={{ marginBottom: '24px' }}>
         <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
           <Clock size={16} />
@@ -157,15 +155,21 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
         <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600 }}>Красные флаги</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {caseData.redFlags.map((flag, i) => (
-            <div key={i} style={{ padding: '10px 16px', background: 'rgba(239, 68, 68, 0.08)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: '#EF4444', fontWeight: 'bold' }}>!</span>
-              <span style={{ color: '#1A1A1A', fontSize: '14px' }}>{flag}</span>
+            <div key={i} style={{ 
+              padding: '12px 16px', 
+              background: 'rgba(239, 68, 68, 0.08)', 
+              borderRadius: '8px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '12px' 
+            }}>
+              <AlertTriangle size={18} color="#EF4444" strokeWidth={2.5} />
+              <span style={{ color: '#1A1A1A', fontSize: '14px', fontWeight: 500 }}>{flag}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* 🔥 НОВЫЙ БЛОК: Персональный план наблюдения */}
       {caseData.nextSteps && caseData.nextSteps.length > 0 && (
         <div style={{ marginBottom: '24px' }}>
           <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -205,31 +209,43 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
         </div>
       )}
 
-      {/* 🔥 НОВЫЙ БЛОК: Вопросы к врачу от ИИ */}
-      {caseData.questionsForDoctor && caseData.questionsForDoctor.length > 0 && (
-        <div style={{ marginBottom: '24px' }}>
-          <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <HelpCircle size={16} />
-            ИИ составил вопросы к врачу
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ color: '#8A8A8A', fontSize: '14px', marginBottom: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <FileCheck size={16} />
+          Клинический протокол и статус интеграции
+        </div>
+        <div style={{ 
+          padding: '16px', 
+          background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%)', 
+          borderRadius: '12px', 
+          border: '1px solid rgba(59, 130, 246, 0.2)' 
+        }}>
+          <div style={{ fontSize: '14px', fontWeight: 600, color: '#1A1A1A', marginBottom: '12px' }}>
+            Рекомендации по ведению пациента:
           </div>
-          <div style={{ padding: '16px', background: 'rgba(156, 39, 176, 0.05)', borderRadius: '12px', border: '1px solid rgba(156, 39, 176, 0.2)' }}>
-            {caseData.questionsForDoctor.map((q, i) => (
-              <div key={i} style={{ 
-                padding: '10px 12px', 
-                background: 'rgba(255, 255, 255, 0.7)', 
-                borderRadius: '8px', 
-                marginBottom: i < caseData.questionsForDoctor!.length - 1 ? '8px' : '0',
-                fontStyle: 'italic'
-              }}>
-                <span style={{ color: '#9C27B0', fontWeight: 700, marginRight: '8px' }}>{i + 1}.</span>
-                <span style={{ color: '#1A1A1A', fontSize: '14px' }}>«{q}»</span>
-              </div>
-            ))}
+          <ul style={{ margin: '0 0 16px 0', paddingLeft: '20px', color: '#4A4A4A', fontSize: '14px', lineHeight: '1.6' }}>
+            <li>Пункционная биопсия образования в течение 14 дней.</li>
+            <li>Исключение злокачественного процесса.</li>
+            <li>Направление в бот пациента уже сформировано и отправлено.</li>
+          </ul>
+          
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px', 
+            padding: '10px 14px', 
+            background: 'rgba(16, 185, 129, 0.1)', 
+            borderRadius: '8px',
+            border: '1px solid rgba(16, 185, 129, 0.3)'
+          }}>
+            <ShieldCheck size={18} color="#10B981" />
+            <span style={{ color: '#065F46', fontSize: '13px', fontWeight: 600 }}>
+              DICOM SR сформирован по шаблону БФТ (Приложение 11.2) • Готов к отправке в ЕРИС
+            </span>
           </div>
         </div>
-      )}
+      </div>
 
-      {/* БЛОК С QR-КОДОМ */}
       {showTelegramLink && (
         <div style={{ 
           marginTop: '24px', 
@@ -327,7 +343,6 @@ export const AdminView: React.FC<AdminViewProps> = ({ caseData }) => {
         </div>
       )}
 
-      {/* КНОПКИ ДЕЙСТВИЙ */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '24px' }}>
         <button
           onClick={handleGenerateTelegramLink}

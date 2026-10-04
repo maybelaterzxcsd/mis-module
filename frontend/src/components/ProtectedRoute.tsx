@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isChecking } = useAuth();
 
-  // Пока проверяем авторизацию — показываем минималистичный лоадер
   if (isChecking) {
     return (
       <div style={{ 
@@ -32,7 +31,6 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  // Если не авторизован — редирект на логин
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }

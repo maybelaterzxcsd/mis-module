@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { Search, User, Phone, Calendar, ChevronRight, Brain } from "lucide-react";
 
-// Встроенные моковые данные (чтобы не зависеть от удаленных файлов)
 const MOCK_PATIENTS = [
   { 
     id: 1, 
@@ -43,7 +42,6 @@ export default function PatientsPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Фильтрация пациентов по поиску
   const filteredPatients = MOCK_PATIENTS.filter((patient) =>
     patient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     patient.diagnosis.toLowerCase().includes(searchQuery.toLowerCase())
@@ -214,7 +212,6 @@ export default function PatientsPage() {
   );
 }
 
-// Вспомогательный компонент для заголовков таблицы
 function Th({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
     <th style={{ padding: "1rem 1.5rem", textAlign: "left", fontSize: "0.8rem", fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", ...style }}>
@@ -223,7 +220,6 @@ function Th({ children, style }: { children: React.ReactNode; style?: React.CSSP
   );
 }
 
-// Вспомогательный компонент для ячеек таблицы
 function Td({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
     <td style={{ padding: "1rem 1.5rem", fontSize: "0.95rem", color: "var(--text-secondary)", ...style }}>

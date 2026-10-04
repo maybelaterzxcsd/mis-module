@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <!-- ЭТОТ СКРИПТ ДОЛЖЕН БЫТЬ АБСОЛЮТНО ПЕРВЫМ В <head> -->
     <script>
       (function() {
         try {
           const isDark = localStorage.getItem('settings_darkTheme') === 'true';
           if (isDark) {
-            // 1. Мгновенно вешаем атрибут, который ждет твой CSS
             document.documentElement.setAttribute('data-theme', 'dark');
-            // 2. Мгновенно красим фон, чтобы браузер не успел показать белый
             document.documentElement.style.backgroundColor = '#0a0a1a';
           } else {
             document.documentElement.style.backgroundColor = '#f8f9ff';
           }
         } catch (e) {
-          // Игнорируем ошибки, если localStorage недоступен
         }
       })();
     </script>
@@ -23,7 +19,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Третье мнение</title>
-    <!-- Дальше твои обычные ссылки на шрифты и стили -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
