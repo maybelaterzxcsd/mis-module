@@ -95,7 +95,7 @@ MedMind решает ключевую проблему современных к
 
 ```bash
 # 1. Клонируем репозиторий
-git clone <repo-url>
+git clone https://github.com/maybelaterzxcsd/mis-module
 cd medmind-mis
 
 # 2. Копируем .env.example и заполняем
