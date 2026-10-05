@@ -102,7 +102,7 @@ API Endpoints:
 ## 5. Стек технологий
 
 Backend API: Python + FastAPI (3.11 / 0.104)
-AI-модель: RuBERT-base (дообучен) - sberbank-ai/ruBert-base
+AI-модель: RuBERT-v2 (дообученный) - maybelaterzxcsd/medmind-rubert-v2
 Frontend МИС: React + TypeScript + Vite (18 / 5.0 / 4.9)
 PDF-генерация: @react-pdf/renderer (3.4)
 Telegram Bot: Aiogram (3.x)

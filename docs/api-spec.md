@@ -208,7 +208,7 @@ Health-check endpoint для мониторинга и Render/UptimeRobot.
 
 **Маппинг полей БФТ → MedMind:**
 
-- **pathologyFlag** (bool) → urgency = "red" if True else "green"
+- **pathologyFlag** (bool) → `pathology_flag = true` (если `urgency` == "red" или "yellow"), иначе `false`
 - **confidenceLevel** (int, 0-100) → ai_confidence = value / 100
 - **report** (string) → Прямой маппинг
 - **conclusion** (string) → Прямой маппинг
